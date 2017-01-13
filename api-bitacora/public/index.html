@@ -1,0 +1,192 @@
+<html lang="en" ng-app="angularBitacora">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bitacora BIT</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <style>
+    ul {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ddd;
+    }
+
+    ul li {
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+    }
+
+    ul li:last-child {
+    border-bottom: none
+    }
+
+    input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+#midiv {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+/* utilizados hasta aca*/
+      /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+      .row.content {height: 1500px}
+
+      /* Set gray background color and 100% height */
+      .sidenav {
+        background-color: #f1f1f1;
+        height: 100%;
+      }
+      .list {
+        .lista {
+          border-bottom: 1px solid #ccc;
+          color: #6f6f6f;
+          font-weight: bold;
+          margin-bottom: 0.5em;
+          padding: 0 0 0.5em 0.5em;
+          }
+        }
+      /* Set black background color, white text and some padding */
+      footer {
+        background-color: #555;
+        color: white;
+        padding: 15px;
+      }
+
+      /* On small screens, set height to 'auto' for sidenav and grid */
+      @media screen and (max-width: 767px) {
+        .sidenav {
+          height: auto;
+          padding: 15px;
+        }
+        .row.content {height: auto;}
+        }
+        #outer {
+          margin: 0 auto; /*center*/
+          width:200px;
+
+        }
+
+        #inner {
+          /*move the whole container 50px to the left side*/
+          margin-left:10px;
+          margin-right:50px;
+          /*or move the whole container 50px to the right side*/
+          /*
+          margin-left:50px;
+          margin-right:-50px;
+          */
+        }
+    </style>
+  </head>
+  <body ng-controller="mainController">
+    <div class="container-fluid">
+      <div class="row content">
+        <!--lateral-->
+        <div class="col-sm-3 sidenav">
+          <br>
+          <h2>Bitacora BIT</h2>
+          <div class="filters">
+
+            <div class="list">Filtrar por responsable</div>
+            <div>
+              <select name="filter" id="filter" ng-model="filter" ng-options="responsable for responsable in responsables" ng-change="changeFilter()">
+                <option value="">Seleccione un responsable</option>
+              </select>
+              <button class="btn btn-default" type="button" ng-click="resetFilter()()">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </div>
+
+
+            <div class="input-group">
+              <input type="text" ng-model="filterText" class="form-control" placeholder="Buscar por titulo...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="aplicarFiltro2()">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <button class="btn btn-default" type="button" ng-click="limpiarFiltro2()">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </button>
+              </span>
+            </div>
+
+          </div>
+          <!--Filtros--->
+          <br>
+          <br>
+          <br>
+          <h5><span class="glyphicon glyphicon-time"></span>Titulo | Fecha Creación</h5>
+          <ul class="nav nav-pills nav-stacked">
+          <div class="list" id="inner">
+            <li id="inner" class="lista" ng-click="marcarRegistro(registro._id)" ng-repeat="registro in bitacora | filter: filter | filter: filter1">{{registro.titulo}} | {{registro.updated_at | date:'dd/MM/yyyy @ h:mma'}}</li>
+          </div>
+          </ul>
+
+        </div>
+        <!--fin lateral-->
+        <!--form <form action=""> -->
+        <br>
+        <br>
+        <br>
+        <div class="col-sm-9">
+        <div id="midiv" class="col-sm-8 col-sm-offset-2 text-left">
+          <form>
+            <label for="fname">Titulo</label>
+            <input type="text" class="form-control input-lg text-left" placeholder="Titulo nuevo registro" ng-model="formData.textTitulo">
+
+            <label for="lname">Descripcion</label>
+            <textarea placeholder="Descripcion nuevo registro" class="form-control input-lg text-left" ng-model="formData.textDescripcion"></textarea>
+            <!--
+            <input type="text" class="form-control input-lg text-left" placeholder="Descripcion nuevo registro" ng-model="formData.textDescripcion">
+          -->
+            <label for="resp">Responsable</label>
+            <select id="resp" name="respon" ng-model="formData.textResponsable">
+              <option value="">{{textResponsable}}</option>
+              <option ng-repeat="responsable in responsables" value="{{responsable}}">{{responsable}}</option>
+            </select>
+            <input type="checkbox" ng-click="deleteBitacora(registro._id)">Eliminar<br>
+            <input type="radio" ng-click="mostrar(registro._id)" ng-show="true">Modificar<br>
+
+            <h5><span class="glyphicon glyphicon-time">{{CurrentDate | date:'dd/MM/yyyy @ h:mma'}}</span></h5>
+            <br>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-success btn-lg" ng-click="crearRegistro()">Agregar</button>
+            <button type="submit" class="btn btn-success btn-lg" ng-click="deleteBitacora(registroID)">Borrar</button>
+            <button type="submit" class="btn btn-success btn-lg" ng-click="actualizaBitacora(registroID)">Actualizar</button>
+
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script> <script src="main.js"></script>
+    <footer class="container-fluid">
+      <p>Cantidad de registros: {{ bitacora.length }}</p>
+    </footer>
+  </body>
+</html>
