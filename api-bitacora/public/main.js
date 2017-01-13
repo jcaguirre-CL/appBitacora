@@ -26,7 +26,17 @@ function mainController($scope, $http) {
       $scope.filter1 = "";
       $scope.filterText = "";
     };
-
+    $scope.data = {
+      group1 : 'Banana',
+      group2 : '2',
+      group3 : 'avatar-1'
+    };
+    $scope.radioData = [
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: '3', isDisabled: true },
+  { label: '4', value: '4' }
+];
     // Cuando se cargue la página, pide del API todos los TODOs
     //aqui estan las llmadas a la api desde la pagina
     $http.get('/api')
@@ -142,6 +152,9 @@ function mainController($scope, $http) {
           // $scope.formData.textResponsable = $scope.responsable;
           // $('.oculto').hide();
           // $('#' + id).show();
+    };
+    $scope.submit = function() {
+      alert('submit');
     };
 
 };

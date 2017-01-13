@@ -99,6 +99,39 @@ input[type=submit]:hover {
           margin-right:-50px;
           */
         }
+        /*css para radio button*/
+                .radioButtondemoBasicUsage body {
+          padding: 20px; }
+
+        .radioButtondemoBasicUsage hr {
+          margin-left: -20px;
+          opacity: 0.3; }
+
+        .radioButtondemoBasicUsage md-radio-group {
+          width: 150px; }
+
+        .radioButtondemoBasicUsage p:last-child {
+          padding-bottom: 50px; }
+
+        .radioButtondemoBasicUsage [ng-controller] {
+          padding: 0 20px; }
+
+        .radioButtondemoBasicUsage .radioValue {
+          margin-left: 5px;
+          color: #0f9d58;
+          font-weight: bold;
+          padding: 5px; }
+
+        .radioButtondemoBasicUsage md-icon {
+          margin: 0 20px 20px;
+          width: 128px;
+          height: 128px; }
+
+        .radioButtondemoBasicUsage .ipsum {
+          color: saddlebrown;
+          font-size: 0.9em; }
+
+        /*fin css para radio button*/
     </style>
   </head>
   <body ng-controller="mainController">
@@ -154,21 +187,30 @@ input[type=submit]:hover {
         <div class="col-sm-9">
         <div id="midiv" class="col-sm-8 col-sm-offset-2 text-left">
           <form>
-            <label for="fname">Titulo</label>
+            <label for="fname">Titulo:</label>
             <input type="text" class="form-control input-lg text-left" placeholder="Titulo nuevo registro" ng-model="formData.textTitulo">
 
-            <label for="lname">Descripcion</label>
+            <label for="lname">Descripcion:</label>
             <textarea placeholder="Descripcion nuevo registro" class="form-control input-lg text-left" ng-model="formData.textDescripcion"></textarea>
             <!--
             <input type="text" class="form-control input-lg text-left" placeholder="Descripcion nuevo registro" ng-model="formData.textDescripcion">
           -->
-            <label for="resp">Responsable</label>
             <select id="resp" name="respon" ng-model="formData.textResponsable">
+              <label for="resp">Responsable:</label>
               <option value="">{{textResponsable}}</option>
               <option ng-repeat="responsable in responsables" value="{{responsable}}">{{responsable}}</option>
             </select>
-            <input type="checkbox" ng-click="deleteBitacora(registro._id)">Eliminar<br>
-            <input type="radio" ng-click="mostrar(registro._id)" ng-show="true">Modificar<br>
+            <label for="finalizado">Finalizado: </label>
+            <input type="radio" ng-click="mostrar(registro._id)" ng-show="true">SI<br>
+            <input type="radio" ng-click="mostrar(registro._id)" ng-show="true">NO<br>
+
+             <p>Selected Value: <span class="radioValue">{{ data.group1 }}</span> </p>
+            <md-radio-group ng-model="data.group1">
+              <md-radio-button value="Apple">Apple</md-radio-button>
+              <md-radio-button value="Banana"> Banana </md-radio-button>
+              <md-radio-button value="Mango">Mango</md-radio-button>
+            </md-radio-group>
+
 
             <h5><span class="glyphicon glyphicon-time">{{CurrentDate | date:'dd/MM/yyyy @ h:mma'}}</span></h5>
             <br>
